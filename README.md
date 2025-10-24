@@ -1,4 +1,4 @@
-# 🤖 AI Testcase Designer MCP
+# 🤖 AI Testcase Generator MCP
 
 An **Model Context Protocol(MCP) server** that generates comprehensive **API test plans** (positive, negative, and boundary/edge cases) directly from endpoint metadata—powered by **LLMs**.
 
