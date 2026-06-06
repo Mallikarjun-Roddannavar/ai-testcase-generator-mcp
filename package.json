@@ -33,7 +33,8 @@
     "prepare": "npm run build",
     "watch": "tsc --watch",
     "inspector": "npx @modelcontextprotocol/inspector build/index.js",
-    "dev": "nodemon --watch build --exec \"node build/index.js\""
+    "dev": "nodemon --watch build --exec \"node build/index.js\"",
+    "test": "jest"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "0.6.0",
