@@ -87,7 +87,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
-server.setRequestHandler(CallToolRequestSchema, async (request, extra) => {
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
   try {
     if (request.params.name !== "generate_tests_excel") {
       return {
