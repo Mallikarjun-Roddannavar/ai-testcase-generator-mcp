@@ -102,9 +102,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request, extra) => {
     const { endpoint, method, payload, extraContext } =
       request.params.arguments || {};
     logger.info(
-      `[Step1] Incoming request: endpoint=${endpoint}, method=${method}, payload=${JSON.stringify(
-        payload
-      )}, extraContext=${extraContext}`
+      `[Step1] Incoming request: endpoint=${endpoint}, method=${method}, payload=[REDACTED], extraContext=[REDACTED]`
     );
     if (!endpoint || !method) {
       logger.error(`[Step1] endpoint and method required`);
