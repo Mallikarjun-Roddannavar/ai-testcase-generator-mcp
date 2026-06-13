@@ -2,7 +2,8 @@
  * Utility for calling the LLM API and returning parsed test plan JSON.
  */
 export async function fetchTestCasesFromLLM({
-  prompt,
+  systemPrompt,
+  userPrompt,
   apiUrl,
   apiKey,
   modelName,
@@ -10,7 +11,8 @@ export async function fetchTestCasesFromLLM({
   maxTokens,
   logger,
 }: {
-  prompt: string;
+  systemPrompt: string;
+  userPrompt: string;
   apiUrl: string;
   apiKey: string;
   modelName: string;
@@ -33,10 +35,9 @@ export async function fetchTestCasesFromLLM({
         messages: [
           {
             role: "system",
-            content:
-              "You are a helpful assistant that generates software test cases.",
+            content: systemPrompt,
           },
-          { role: "user", content: prompt },
+          { role: "user", content: userPrompt },
         ],
         temperature,
         max_tokens: maxTokens,

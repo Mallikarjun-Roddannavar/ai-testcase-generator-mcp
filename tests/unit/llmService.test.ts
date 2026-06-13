@@ -16,7 +16,8 @@ describe("fetchTestCasesFromLLM", () => {
       error: jest.fn(),
     };
     baseParams = {
-      prompt: "Generate tests",
+      systemPrompt: "System instruction",
+      userPrompt: "Generate tests",
       apiUrl: "https://fake-llm.com/api",
       apiKey: "secret",
       modelName: "test-model",

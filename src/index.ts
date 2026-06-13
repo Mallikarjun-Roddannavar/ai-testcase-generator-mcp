@@ -122,20 +122,23 @@ server.setRequestHandler(CallToolRequestSchema, async (request, extra) => {
     logger.info(
       `[Step2] Building LLM prompt for endpoint ${endpoint} (${method})`
     );
-    let prompt = `You are a Test Engineer. Please create a comprehensive test plan for the API endpoint:\n${String(
-      method
-    ).toUpperCase()} ${endpoint}\n`;
-    if (payload && Object.keys(payload).length > 0) {
-      prompt += `\nSample Payload:\n${JSON.stringify(payload, null, 2)}\n`;
-    }
-    prompt += fs.readFileSync(
+
+    // Static instructions and guidelines go in the system prompt
+    let systemPrompt = `You are a Test Engineer. Please create a comprehensive test plan for the provided API endpoint.\n`;
+    systemPrompt += fs.readFileSync(
       path.join(WORK_DIR, "src", "prompts", "testcase_prompt.txt"),
       "utf-8"
     );
-    if (extraContext) {
-      prompt += `\nAdditional context: ${extraContext}\n`;
+
+    // User-provided data goes in the user prompt to prevent prompt injection
+    let userPrompt = `Endpoint:\n${String(method).toUpperCase()} ${endpoint}\n`;
+    if (payload && Object.keys(payload).length > 0) {
+      userPrompt += `\nSample Payload:\n${JSON.stringify(payload, null, 2)}\n`;
     }
-    logger.info(`[Step3] Prompt constructed. Length: ${prompt.length} chars`);
+    if (extraContext) {
+      userPrompt += `\nAdditional context: ${extraContext}\n`;
+    }
+    logger.info(`[Step3] Prompts constructed. System Length: ${systemPrompt.length}, User Length: ${userPrompt.length}`);
 
     // -----------------------------
     // LLM API call
@@ -143,7 +146,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request, extra) => {
     let llmJSON: any;
     try {
       llmJSON = await fetchTestCasesFromLLM({
-        prompt,
+        systemPrompt,
+        userPrompt,
         apiUrl: MODEL_API_URL,
         apiKey: MODEL_API_KEY,
         modelName: MODEL_NAME,
