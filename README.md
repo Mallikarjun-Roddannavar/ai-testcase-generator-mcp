@@ -175,6 +175,20 @@ Follow these steps to set up the AI Testcase Designer MCP server locally:
 
 </details>
 
+#### c. Hermes Agent
+<details>
+You can also use the AI Testcase Designer MCP server with [Hermes Agent](https://github.com/nousresearch/hermes-agent).
+
+- Add the following server configuration to `~/.hermes/config.yaml` under `mcp_servers`:
+
+```yaml
+mcp_servers:
+  ai-testcase-designer-mcp:
+    command: "node"
+    args: ["/absolute/path/to/ai-testcase-designer-mcp/build/index.js"]
+```
+</details>
+
 ## 🔑 API Key & Work Directory Setup
 
 To use the AI Testcase Designer MCP.
