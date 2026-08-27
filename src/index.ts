@@ -36,6 +36,9 @@ if (!MODEL_API_KEY) {
 // -----------------------------
 // MCP Server Initialization
 // -----------------------------
+
+let cachedSystemPrompt: string | null = null;
+
 const server = new Server(
   {
     name: "AI Testcase Designer MCP",
@@ -124,11 +127,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     );
 
     // Static instructions and guidelines go in the system prompt
-    let systemPrompt = `You are a Test Engineer. Please create a comprehensive test plan for the provided API endpoint.\n`;
-    systemPrompt += fs.readFileSync(
-      path.join(WORK_DIR, "src", "prompts", "testcase_prompt.txt"),
-      "utf-8"
-    );
+    if (cachedSystemPrompt === null) {
+      let basePrompt = `You are a Test Engineer. Please create a comprehensive test plan for the provided API endpoint.\n`;
+      basePrompt += fs.readFileSync(
+        path.join(WORK_DIR, "src", "prompts", "testcase_prompt.txt"),
+        "utf-8"
+      );
+      cachedSystemPrompt = basePrompt;
+    }
+    let systemPrompt = cachedSystemPrompt;
 
     // User-provided data goes in the user prompt to prevent prompt injection
     let userPrompt = `Endpoint:\n${String(method).toUpperCase()} ${endpoint}\n`;
