@@ -1,3 +1,6 @@
+![GitHub stars](https://img.shields.io/github/stars/Mallikarjun-Roddannavar/ai-testcase-generator-mcp)
+![GitHub forks](https://img.shields.io/github/forks/Mallikarjun-Roddannavar/ai-testcase-generator-mcp)
+![GitHub last commit](https://img.shields.io/github/last-commit/Mallikarjun-Roddannavar/ai-testcase-generator-mcp)
 # 🤖 AI Testcase Generator MCP
 
 An **Model Context Protocol(MCP) server** that generates comprehensive **API test plans** (positive, negative, and boundary/edge cases) directly from endpoint metadata—powered by **LLMs**.
